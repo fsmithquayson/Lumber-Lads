@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<title>LumberLads Main Page</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<style>
+body,h1,h2,h3,h4,h5,h6{font-family: "Raleway", sans-serif}
+body, html {height: 100%}
+p {line-height: 2}
+.bgimg{
+    min-height: 100%;
+    background-position: center;
+    background-size: cover;
+}
+.bgimg {background-image: url("http://cdn.pcwallart.com/images/dark-forest-background-wallpaper-3.jpg")}
+</style>
+<body>
+
+<!-- Navbar (sit on top) -->
+<div class="w3-bottom w3-hide-small">
+  <ul class="w3-navbar w3-white w3-center w3-padding-8 w3-opacity-min w3-hover-opacity-off">
+    <li style="width:25%"><a href="fileInput.php" class="w3-margin-left w3-round">Input Logs</a></li>
+    <li style="width:25%"><a href="viewInventory.php" class="w3-round">View Inventory</a></li>
+    <li style="width:25%"><a href="placeOrder.php" class="w3-round">Place Order</a></li>
+    <li style="width:25%"><a href="receipts.php" class="w3-margin-right w3-round w3-hover-black">View Receipts</a></li>
+  </ul>
+</div>
+
+<!-- Header -->
+<header class="w3-display-container w3-wide bgimg w3-grayscale-min" id="home">
+  <div class="w3-display-middle w3-text-white w3-center">
+    <h1 class="w3-jumbo">LumberLads</h1>
+    <h2><b>Fall 2016</b></h2>
+  </div>
+</header>
+
+<div class="w3-container w3-padding-64 w3-pale-red w3-grayscale-min w3-center" id="locations">
+  <div class="w3-content">
+    <h1 class="w3-text-grey"><b>Locations</b></h1>
+    <div class="w3-row">
+      <div class="w3-half">
+        <h2>Free Shipping</h2>
+        <p>Quitman, Hahira, Adel, Lakeland</p>
+        <p>Statenville, Lake Park, Jasper, Madison</p>
+      </div>
+      <div class="w3-half">
+        <h2>Shipping Charged</h2>
+        <p>Tifton, Nashville, Homerville</p>
+        <p>Pearson, Douglass, Waycross</p>
+        <p>Fargo, Lake City, Monticello</p>
+        <p>Tallahassee, Thomasville, Jacksonville</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Container Google Section-->
+<div class="w3-content w3-container w3-padding-64">
+  <h3 class="w3-center">NEED A BIT OF VISUAL AID?</h3>
+  <p class="w3-center"><em>We hope this helps!</em></p>
+
+  <div class="w3-row w3-padding-32 w3-section">
+    <div>
+      <!-- Add Google Maps -->
+      <div id="googleMap" class="w3-round-large w3-greyscale" style="width:100%;height:400px;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Google Maps -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAbe6p3W_wUf_vnS5zvb5H7foDHktrYEM"></script>
+<script>
+<!-- Google Map Location -->
+var myCenter = new google.maps.LatLng(30.832348, -83.278547);
+var markers = [];
+var map;
+var freeLocs = [
+new google.maps.LatLng(31.136915, -83.423371),//adel
+new google.maps.LatLng(30.784710, -83.560022),//quitman
+new google.maps.LatLng(30.991308, -83.372647),//hahira
+new google.maps.LatLng(31.041043, -83.075308),//lakeland
+new google.maps.LatLng(30.703416, -83.028062),//statenville
+new google.maps.LatLng(30.684768, -83.182880),//lake park
+new google.maps.LatLng(30.518273, -82.948170),//jasper
+new google.maps.LatLng(30.469365, -83.412907)//madison
+];
+var chargedLocs = [
+new google.maps.LatLng(31.449876, -83.508956),//tifton
+new google.maps.LatLng(31.207191, -83.250160),//nashville
+new google.maps.LatLng(31.036685, -82.747180),//homerville
+new google.maps.LatLng(31.297679, -82.852581),//pearson
+new google.maps.LatLng(31.508475, -82.849919),//douglas
+new google.maps.LatLng(31.213499, -82.353934),//waycross
+new google.maps.LatLng(30.682226, -82.566786),//fargo
+new google.maps.LatLng(30.189216, -82.639422),//lake city
+new google.maps.LatLng(30.545084, -83.870276),//monticello
+new google.maps.LatLng(30.438132, -84.280660),//tallahassee
+new google.maps.LatLng(30.836425, -83.979239),//thomasville
+new google.maps.LatLng(30.331674, -81.656120),//jacksonville
+];
+<!-- Initialize Google Map Function -->
+function initialize() {
+var mapProp = {
+  center: myCenter,
+  zoom: 9,
+  scrollwheel: false,
+  draggable: true,
+  mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+//icon: ('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
+var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+placeFree();
+placeCharged();
+
+var marker = new google.maps.Marker({
+  position: myCenter,
+});
+
+
+
+function placeFree(){
+ for (var i = 0; i < freeLocs.length; i++)
+  {
+    markers.push(new google.maps.Marker({
+    position: freeLocs[i],
+    map: map,
+    }));
+  }
+}
+
+function placeCharged(){
+ for (var i = 0; i < chargedLocs.length; i++)
+  {
+    markers.push(new google.maps.Marker({
+    position: chargedLocs[i],
+    icon: ('http://maps.google.com/mapfiles/ms/icons/green-dot.png'),
+    map: map,
+    }));
+  }
+}
+
+marker.setMap(map);
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+// Modal Image Gallery
+function onClick(element) {
+  document.getElementById("img01").src = element.src;
+  document.getElementById("modal01").style.display = "block";
+  var captionText = document.getElementById("caption");
+  captionText.innerHTML = element.alt;
+}
+
+// Change style of navbar on scroll
+window.onscroll = function() {myFunction()};
+function myFunction() {
+    var navbar = document.getElementById("myNavbar");
+    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+        navbar.className = "w3-navbar" + " w3-card-2" + " w3-animate-top" + " w3-white";
+    } else {
+        navbar.className = navbar.className.replace(" w3-card-2 w3-animate-top w3-white", "");
+    }
+}
+</script>
+
+<!-- Footer -->
+<footer class="w3-center w3-black w3-padding-16">
+  <p>LumberLads / Software Engineering / Fall 2016 </p>
+</footer>
+<div class="w3-hide-small" style="margin-bottom:32px"> </div>
+
+</body>
+</html>
